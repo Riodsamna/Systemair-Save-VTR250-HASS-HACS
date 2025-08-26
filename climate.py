@@ -23,9 +23,10 @@ class SystemairClimate(ClimateEntity):
     """Systemair climate entity."""
 
     _attr_hvac_modes = ["off", "heat", "cool", "auto"]
+    _attr_hvac_mode = "off"
     _attr_preset_modes = PRESET_MODES
     _attr_should_poll = True
-    _attr_temperature_unit = "°C"  # <- pridėta!
+    _attr_temperature_unit = "°C"
 
     def __init__(self, api: SystemairAPI):
         self._api = api
@@ -33,6 +34,7 @@ class SystemairClimate(ClimateEntity):
         self._attr_unique_id = "systemair_climate"
         self._attr_temperature = None
         self._attr_preset_mode = None
+        self._attr_hvac_mode = "off"
 
     async def async_update(self):
         """Čia skaitoma temperatūra ir režimai iš Modbus."""
