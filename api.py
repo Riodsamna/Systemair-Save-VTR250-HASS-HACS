@@ -8,9 +8,10 @@ from .const import LOGGER
 class SystemairAPI:
     """Systemair Modbus API adapteris."""
 
-    def __init__(self, host: str, port: int = 502):
+    def __init__(self, host: str, port: int = 502, unit_id: int = 1):
         self._host = host
         self._port = port
+        self._unit_id = unit_id
         self._client: AsyncModbusTcpClient | None = None
 
     async def connect(self) -> bool:
@@ -35,7 +36,7 @@ class SystemairAPI:
             LOGGER.error("Modbus klientas neprisijungęs")
             return None
         try:
-            rr = await self._client.read_holding_registers(register, 1)
+            rr = await self._client.read_holding_registers(register, 1, unit=self._unit_id)
             if rr.isError():
                 LOGGER.warning("Klaida skaitant registrą %s", register)
                 return None
@@ -50,7 +51,7 @@ class SystemairAPI:
             LOGGER.error("Modbus klientas neprisijungęs")
             return False
         try:
-            rq = await self._client.write_register(register, value)
+            rq = await self._client.write_register(register, value, unit=self._unit_id)
             if rq.isError():
                 LOGGER.warning("Klaida rašant į registrą %s", register)
                 return False
@@ -66,7 +67,7 @@ class SystemairAPI:
             LOGGER.error("Modbus klientas neprisijungęs")
             return None
         try:
-            rr = await self._client.read_coils(coil, 1)
+            rr = await self._client.read_coils(coil, 1, unit=self._unit_id)
             if rr.isError():
                 LOGGER.warning("Klaida skaitant coil %s", coil)
                 return None
@@ -81,7 +82,7 @@ class SystemairAPI:
             LOGGER.error("Modbus klientas neprisijungęs")
             return False
         try:
-            rq = await self._client.write_coil(coil, value)
+            rq = await self._client.write_coil(coil, value, unit=self._unit_id)
             if rq.isError():
                 LOGGER.warning("Klaida rašant į coil %s", coil)
                 return False
