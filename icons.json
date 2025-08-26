@@ -1,4 +1,3 @@
-"""Modbus icons parameters for Systemair VTR250 ventilation unit. icons.json"""
 {
   "sensor.supply_air_temp": "mdi:thermometer",
   "switch.bypass": "mdi:swap-horizontal"
