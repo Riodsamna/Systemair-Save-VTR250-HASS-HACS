@@ -1,21 +1,5 @@
 """Modbus icons parameters for Systemair VTR250 ventilation unit. icons.json"""
 {
-    "entity": {
-        "climate": {
-            "saveconnect": {
-                "state_attributes": {
-                    "preset_mode": {
-                        "default": "mdi:tune-variant",
-                        "state": {
-                            "crowded": "mdi:account-multiple",
-                            "refresh": "mdi:fan-plus",
-                            "fireplace": "mdi:fireplace",
-                            "away": "mdi:exit-run",
-                            "holiday": "mdi:bag-suitcase"
-                        }
-                    }
-                }
-            }
-        }
-    }
+  "sensor.supply_air_temp": "mdi:thermometer",
+  "switch.bypass": "mdi:swap-horizontal"
 }
