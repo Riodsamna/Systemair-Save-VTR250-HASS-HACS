@@ -1,3 +1,4 @@
+"""Modbus parameters for Systemair VTR250 ventilation unit and helper functions. modbus_device.py"""
 from __future__ import annotations
 
 from .api import SystemairAPI

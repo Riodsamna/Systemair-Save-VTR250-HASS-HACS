@@ -1,4 +1,4 @@
-"""Systemair Modbus integracijos paleidimas Home Assistant'e."""
+"""Systemair Modbus integracijos paleidimas Home Assistant'e. __init__.py"""
 
 from __future__ import annotations
 import logging

@@ -1,4 +1,4 @@
-"""Systemair Modbus konfigūracijos vedlys."""
+"""Systemair Modbus konfigūracijos vedlys. config_flow.py"""
 
 from homeassistant import config_entries
 from homeassistant.core import callback

@@ -1,4 +1,4 @@
-"""Switch platforma Systemair Modbus įrenginio įjungimui/išjungimui."""
+"""Switch platforma Systemair Modbus įrenginio įjungimui/išjungimui. switch.py"""
 
 from datetime import timedelta
 from homeassistant.components.switch import SwitchEntity
@@ -10,7 +10,6 @@ from .const import DOMAIN, LOGGER, HVAC_POWER_COIL
 from .api import SystemairAPI
 
 SCAN_INTERVAL = timedelta(seconds=30)
-
 
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
@@ -25,34 +24,37 @@ async def async_setup_entry(
     entity = SystemairPowerSwitch(api)
     async_add_entities([entity], update_before_add=True)
 
-
 class SystemairPowerSwitch(SwitchEntity):
     """Systemair įrenginio įjungimo/išjungimo jungiklis."""
+
+    _attr_should_poll = True
 
     def __init__(self, api: SystemairAPI):
         self._api = api
         self._attr_name = "Systemair Power"
-        self._attr_unique_id = "systemair_power_switch"
-        self._attr_is_on = None
+        self._attr_unique_id = "systemair_power"
+        self._is_on = False
 
     async def async_update(self):
-        """Atnaujina būseną iš Modbus coil."""
+        """Skaito įrenginio būseną iš coil."""
         try:
-            coils = await self._api.read_coil(HVAC_POWER_COIL)
-            if coils:
-                self._attr_is_on = coils[0]
-                LOGGER.debug("Switch atnaujintas: %s", self._attr_is_on)
+            result = await self._api.read_coil(HVAC_POWER_COIL)
+            if result is not None:
+                self._is_on = result[0]
+                self._attr_is_on = self._is_on
+                LOGGER.debug("Systemair Power: %s", self._is_on)
+            else:
+                self._attr_is_on = False
         except Exception as err:
-            LOGGER.error("Nepavyko atnaujinti switch: %s", err)
+            self._attr_is_on = False
+            LOGGER.error("Klaida skaitant Systemair Power: %s", err)
 
     async def async_turn_on(self, **kwargs):
         """Įjungia įrenginį."""
-        if await self._api.write_coil(HVAC_POWER_COIL, True):
-            self._attr_is_on = True
-            self.async_write_ha_state()
+        await self._api.write_coil(HVAC_POWER_COIL, True)
+        await self.async_update()
 
     async def async_turn_off(self, **kwargs):
         """Išjungia įrenginį."""
-        if await self._api.write_coil(HVAC_POWER_COIL, False):
-            self._attr_is_on = False
-            self.async_write_ha_state()
+        await self._api.write_coil(HVAC_POWER_COIL, False)
+        await self.async_update()

@@ -1,13 +1,10 @@
-"""Systemair Modbus API adapteris."""
+"""API Systemair Modbus integracijai. api.py"""
 
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.exceptions import ModbusException
 from .const import LOGGER
 
-
 class SystemairAPI:
-    """Systemair Modbus API adapteris."""
-
     def __init__(self, host: str, port: int = 502, unit_id: int = 1):
         self._host = host
         self._port = port
@@ -77,7 +74,7 @@ class SystemairAPI:
             return None
 
     async def write_coil(self, coil: int, value: bool) -> bool:
-        """Rašo coil reikšmę."""
+        """Rašo į coil būseną."""
         if not self._client:
             LOGGER.error("Modbus klientas neprisijungęs")
             return False

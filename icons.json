@@ -1,3 +1,4 @@
+"""Modbus icons parameters for Systemair VTR250 ventilation unit. icons.json"""
 {
     "entity": {
         "climate": {

@@ -1,4 +1,4 @@
-"""Modbus parameters for Systemair VTR250 ventilation unit and helper functions."""
+"""Modbus parameters for Systemair VTR250 ventilation unit and helper functions. modbus.py"""
 
 from dataclasses import dataclass
 from enum import Enum

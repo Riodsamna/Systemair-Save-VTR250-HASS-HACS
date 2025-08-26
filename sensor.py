@@ -1,4 +1,4 @@
-"""Systemair temperatūros jutikliai: išorės ir vidaus."""
+"""Systemair temperatūros jutikliai: išorės ir vidaus. sensor.py"""
 
 from datetime import timedelta
 from homeassistant.components.sensor import (
@@ -14,7 +14,6 @@ from .const import DOMAIN, LOGGER, OUTDOOR_TEMP_REGISTER, INDOOR_TEMP_REGISTER
 from .api import SystemairAPI
 
 SCAN_INTERVAL = timedelta(seconds=30)
-
 
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
@@ -32,7 +31,6 @@ async def async_setup_entry(
     ]
 
     async_add_entities(entities, update_before_add=True)
-
 
 class SystemairTemperatureSensor(SensorEntity):
     """Systemair temperatūros jutiklis."""

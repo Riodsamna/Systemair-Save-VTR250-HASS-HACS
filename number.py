@@ -1,4 +1,4 @@
-"""Systemair Modbus skaitiniai parametrai: temperatūros ir ventiliatoriaus setpoint'ai."""
+"""Systemair Modbus skaitiniai parametrai: temperatūros ir ventiliatoriaus setpoint'ai. number.py"""
 
 from datetime import timedelta
 from homeassistant.components.number import NumberEntity

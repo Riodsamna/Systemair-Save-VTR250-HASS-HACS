@@ -1,4 +1,4 @@
-"""DataUpdateCoordinator for Systemair."""
+"""DataUpdateCoordinator for Systemair. coordinator.py"""
 
 from __future__ import annotations
 

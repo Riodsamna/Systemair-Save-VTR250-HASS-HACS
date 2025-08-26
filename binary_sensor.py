@@ -1,4 +1,4 @@
-"""Binary sensor platform for Systemair Modbus."""
+"""Binary sensor platform for Systemair Modbus. binary_sensor.py"""
 
 from datetime import timedelta
 from homeassistant.components.binary_sensor import BinarySensorEntity, BinarySensorDeviceClass

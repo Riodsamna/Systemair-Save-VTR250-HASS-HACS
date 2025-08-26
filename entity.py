@@ -1,4 +1,4 @@
-"""Systemair entity class."""
+"""Systemair entity class. entity.py"""
 
 from __future__ import annotations
 

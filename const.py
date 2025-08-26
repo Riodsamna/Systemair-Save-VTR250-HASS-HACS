@@ -1,4 +1,4 @@
-"""Konstantos Systemair Modbus integracijai."""
+"""Konstantos Systemair Modbus integracijai. const.py"""
 
 import logging
 
