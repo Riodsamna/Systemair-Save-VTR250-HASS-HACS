@@ -33,7 +33,7 @@ class SystemairAPI:
             LOGGER.error("Modbus klientas neprisijungęs")
             return None
         try:
-            rr = await self._client.read_holding_registers(register, 1, unit=self._unit_id)
+            rr = await self._client.read_holding_registers(register, 1, slave_id=self._unit_id)
             if rr.isError():
                 LOGGER.warning("Klaida skaitant registrą %s", register)
                 return None
@@ -48,7 +48,7 @@ class SystemairAPI:
             LOGGER.error("Modbus klientas neprisijungęs")
             return False
         try:
-            rq = await self._client.write_register(register, value, unit=self._unit_id)
+            rq = await self._client.write_register(register, value, slave_id=self._unit_id)
             if rq.isError():
                 LOGGER.warning("Klaida rašant į registrą %s", register)
                 return False
@@ -64,7 +64,7 @@ class SystemairAPI:
             LOGGER.error("Modbus klientas neprisijungęs")
             return None
         try:
-            rr = await self._client.read_coils(coil, 1, unit=self._unit_id)
+            rr = await self._client.read_coils(coil, 1, slave_id=self._unit_id)
             if rr.isError():
                 LOGGER.warning("Klaida skaitant coil %s", coil)
                 return None
@@ -79,7 +79,7 @@ class SystemairAPI:
             LOGGER.error("Modbus klientas neprisijungęs")
             return False
         try:
-            rq = await self._client.write_coil(coil, value, unit=self._unit_id)
+            rq = await self._client.write_coil(coil, value, slave_id=self._unit_id)
             if rq.isError():
                 LOGGER.warning("Klaida rašant į coil %s", coil)
                 return False

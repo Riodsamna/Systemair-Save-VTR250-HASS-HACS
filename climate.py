@@ -22,9 +22,10 @@ async def async_setup_entry(
 class SystemairClimate(ClimateEntity):
     """Systemair climate entity."""
 
-    _attr_hvac_modes = ["off", "heat", "cool", "auto"]  # pataisyta deklaracija
+    _attr_hvac_modes = ["off", "heat", "cool", "auto"]
     _attr_preset_modes = PRESET_MODES
     _attr_should_poll = True
+    _attr_temperature_unit = "°C"  # <- pridėta!
 
     def __init__(self, api: SystemairAPI):
         self._api = api
