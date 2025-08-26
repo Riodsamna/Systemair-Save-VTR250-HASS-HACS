@@ -25,12 +25,12 @@
     },
     "number": {
       "supply_air_setpoint": {
-        "name": "Tiekiamo oro setpoint",
-        "state": "Temperatūros nustatymas"
+        "name": "Tiekiamo oro nustatyta reikšmė",
+        "state": "Nustatyta temperatūra"
       },
       "fan_speed_level": {
         "name": "Ventiliatoriaus greitis",
-        "state": "Greitis"
+        "state": "Greitis (lygis)"
       }
     },
     "switch": {
