@@ -1,0 +1,51 @@
+{
+  "title": "Systemair Modbus integracija",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Prisijungimas prie Systemair įrenginio",
+        "description": "Įveskite IP adresą ir Modbus TCP prievadą.",
+        "data": {
+          "host": "Įrenginio IP adresas",
+          "port": "Modbus TCP prievadas"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "supply_air_temp": {
+        "name": "Tiekiamo oro temperatūra",
+        "state": "Temperatūra"
+      },
+      "extract_air_temp": {
+        "name": "Ištraukiamo oro temperatūra",
+        "state": "Temperatūra"
+      }
+    },
+    "number": {
+      "supply_air_setpoint": {
+        "name": "Tiekiamo oro setpoint",
+        "state": "Temperatūros nustatymas"
+      },
+      "fan_speed_level": {
+        "name": "Ventiliatoriaus greitis",
+        "state": "Greitis"
+      }
+    },
+    "switch": {
+      "bypass": {
+        "name": "Bypass režimas",
+        "state": {
+          "on": "Aktyvuotas",
+          "off": "Išjungtas"
+        }
+      }
+    },
+    "climate": {
+      "systemair_climate": {
+        "name": "Systemair klimato kontrolė"
+      }
+    }
+  }
+}
