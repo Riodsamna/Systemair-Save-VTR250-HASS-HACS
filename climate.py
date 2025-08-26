@@ -1,4 +1,4 @@
-"""Systemair klimato (beta) platforma. climate.py"""
+"""Systemair klimato (beta) platforma.climate.py"""
 
 from homeassistant.components.climate import ClimateEntity
 from homeassistant.config_entries import ConfigEntry
@@ -23,10 +23,10 @@ class SystemairClimate(ClimateEntity):
     """Systemair climate entity."""
 
     _attr_hvac_modes = ["off", "heat", "cool", "auto"]
-    _attr_hvac_mode = "off"
     _attr_preset_modes = PRESET_MODES
     _attr_should_poll = True
     _attr_temperature_unit = "°C"
+    _attr_hvac_mode = "off"
 
     def __init__(self, api: SystemairAPI):
         self._api = api
@@ -35,6 +35,14 @@ class SystemairClimate(ClimateEntity):
         self._attr_temperature = None
         self._attr_preset_mode = None
         self._attr_hvac_mode = "off"
+
+    @property
+    def hvac_mode(self):
+        return self._attr_hvac_mode
+
+    @property
+    def temperature_unit(self):
+        return self._attr_temperature_unit
 
     async def async_update(self):
         """Čia skaitoma temperatūra ir režimai iš Modbus."""

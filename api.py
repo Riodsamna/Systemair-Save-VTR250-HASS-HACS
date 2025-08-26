@@ -38,7 +38,7 @@ class SystemairAPI:
                 LOGGER.warning("Klaida skaitant registrą %s", register)
                 return None
             return rr.registers[0]
-        except ModbusException as err:
+        except Exception as err:
             LOGGER.error("Modbus išimtis skaitant registrą %s: %s", register, err)
             return None
 
@@ -54,7 +54,7 @@ class SystemairAPI:
                 return False
             LOGGER.debug("Įrašyta %s į registrą %s", value, register)
             return True
-        except ModbusException as err:
+        except Exception as err:
             LOGGER.error("Modbus išimtis rašant į registrą %s: %s", register, err)
             return False
 
@@ -69,7 +69,7 @@ class SystemairAPI:
                 LOGGER.warning("Klaida skaitant coil %s", coil)
                 return None
             return rr.bits
-        except ModbusException as err:
+        except Exception as err:
             LOGGER.error("Modbus išimtis skaitant coil %s: %s", coil, err)
             return None
 
@@ -85,6 +85,6 @@ class SystemairAPI:
                 return False
             LOGGER.debug("Įrašyta %s į coil %s", value, coil)
             return True
-        except ModbusException as err:
+        except Exception as err:
             LOGGER.error("Modbus išimtis rašant į coil %s: %s", coil, err)
             return False
