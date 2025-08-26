@@ -1,5 +1,5 @@
 # 🌬️ Systemair Modbus integracija Home Assistant
-
+26.08.2025 Working only integration, interaction with VTR250 not working.
 Ši integracija leidžia prijungti Systemair vėdinimo įrenginį prie Home Assistant per Modbus TCP protokolą.
 
 ---
