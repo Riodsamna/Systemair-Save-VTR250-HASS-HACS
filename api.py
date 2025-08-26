@@ -12,7 +12,6 @@ class SystemairAPI:
         self._client: AsyncModbusTcpClient | None = None
 
     async def connect(self) -> bool:
-        """Prisijungia prie Modbus įrenginio."""
         self._client = AsyncModbusTcpClient(self._host, port=self._port)
         connected = await self._client.connect()
         if connected:
@@ -22,69 +21,74 @@ class SystemairAPI:
         return connected
 
     async def close(self):
-        """Atsijungia nuo Modbus įrenginio."""
         if self._client:
             await self._client.close()
             LOGGER.debug("Atsijungta nuo Systemair Modbus")
 
     async def read_register(self, register: int) -> int | None:
-        """Skaito vieną holding registrą."""
         if not self._client:
             LOGGER.error("Modbus klientas neprisijungęs")
             return None
         try:
+            # Bandymas su unit
+            rr = await self._client.read_holding_registers(register, 1, unit=self._unit_id)
+        except TypeError:
+            # Bandymas su slave_id
             rr = await self._client.read_holding_registers(register, 1, slave_id=self._unit_id)
-            if rr.isError():
-                LOGGER.warning("Klaida skaitant registrą %s", register)
-                return None
-            return rr.registers[0]
         except Exception as err:
             LOGGER.error("Modbus išimtis skaitant registrą %s: %s", register, err)
             return None
+        if rr.isError():
+            LOGGER.warning("Klaida skaitant registrą %s", register)
+            return None
+        return rr.registers[0]
 
     async def write_register(self, register: int, value: int) -> bool:
-        """Rašo reikšmę į holding registrą."""
         if not self._client:
             LOGGER.error("Modbus klientas neprisijungęs")
             return False
         try:
+            rq = await self._client.write_register(register, value, unit=self._unit_id)
+        except TypeError:
             rq = await self._client.write_register(register, value, slave_id=self._unit_id)
-            if rq.isError():
-                LOGGER.warning("Klaida rašant į registrą %s", register)
-                return False
-            LOGGER.debug("Įrašyta %s į registrą %s", value, register)
-            return True
         except Exception as err:
             LOGGER.error("Modbus išimtis rašant į registrą %s: %s", register, err)
             return False
+        if rq.isError():
+            LOGGER.warning("Klaida rašant į registrą %s", register)
+            return False
+        LOGGER.debug("Įrašyta %s į registrą %s", value, register)
+        return True
 
     async def read_coil(self, coil: int) -> list[bool] | None:
-        """Skaito coil būseną."""
         if not self._client:
             LOGGER.error("Modbus klientas neprisijungęs")
             return None
         try:
+            rr = await self._client.read_coils(coil, 1, unit=self._unit_id)
+        except TypeError:
             rr = await self._client.read_coils(coil, 1, slave_id=self._unit_id)
-            if rr.isError():
-                LOGGER.warning("Klaida skaitant coil %s", coil)
-                return None
-            return rr.bits
         except Exception as err:
             LOGGER.error("Modbus išimtis skaitant coil %s: %s", coil, err)
             return None
+        if rr.isError():
+            LOGGER.warning("Klaida skaitant coil %s", coil)
+            return None
+        return rr.bits
 
     async def write_coil(self, coil: int, value: bool) -> bool:
-        """Rašo į coil būseną."""
         if not self._client:
             LOGGER.error("Modbus klientas neprisijungęs")
             return False
         try:
+            rq = await self._client.write_coil(coil, value, unit=self._unit_id)
+        except TypeError:
             rq = await self._client.write_coil(coil, value, slave_id=self._unit_id)
-            if rq.isError():
-                LOGGER.warning("Klaida rašant į coil %s", coil)
-                return False
-            LOGGER.debug("Įrašyta %s į coil %s", value, coil)
-            return True
         except Exception as err:
             LOGGER.error("Modbus išimtis rašant į coil %s: %s", coil, err)
             return False
+        if rq.isError():
+            LOGGER.warning("Klaida rašant į coil %s", coil)
+            return False
+        LOGGER.debug("Įrašyta %s į coil %s", value, coil)
+        return True
